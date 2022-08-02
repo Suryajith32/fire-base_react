@@ -1,0 +1,58 @@
+#app {
+}
+
+h1 {
+  text-align: center;
+}
+
+.container {
+  width: 600px;
+  margin: auto;
+}
+.box3{
+  align-items: center;
+  align-content: center;
+}
+
+.grid td {
+  width: 80px;
+  height:50px;
+  padding: 50px 30px;
+  border: 2px solid orange;
+  text-align: center;
+  float: left;
+  margin: 5px;
+  display: inline-block;
+}
+
+.grid td:hover {
+  opacity: .7;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.reserved {
+  background: orange;
+  color: #fff;
+  display: inline-block;
+}
+
+.reserved::after {
+    display: inline-block;
+
+}
+
+.available::after {
+    display: inline-block;
+ 
+  
+}
+
+.available {
+  color: #333;
+  display: inline-block;
+}
+
+li {
+  list-style: none;
+}

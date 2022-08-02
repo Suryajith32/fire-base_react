@@ -1,95 +1,203 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import DeleteIcon from '@mui/icons-material/Delete';
-import userDataServices from '../services/user.services'
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Box } from '@mui/system';
-import { useUserAuth } from '../context/UserAuthContext'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import PersonIcon from '@mui/icons-material/Person';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import BookIcon from '@mui/icons-material/Book';
+import EventIcon from '@mui/icons-material/Event';
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import AddCardIcon from '@mui/icons-material/AddCard';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import ApplicationList from '../pages/ApplicationList'
+
+import ApprovedList from '../pages/ApprovedList';
+import {Link} from 'react-router-dom'
 
 
-export default function BasicTable() {
-     
+const drawerWidth = 240;
 
-    const [user, setUser]= React.useState([])
-    React.useEffect(() => {
-     getUser();
-    }, [])
-    const {logOut} = useUserAuth();
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
 
-    const getUser=async()=>{
-      const data = await userDataServices.getAllUser();
-      console.log(data.docs)
-      setUser(data.docs.map((doc)=>({...doc.data(), id: doc.id})))
-    }
-    const deleteHandler =async(id)=>{
-        await userDataServices.deleteUser(id);
-        getUser();
-    }
-    const handleLogOut=async()=>{
-      try {
-        await logOut();
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
+export default function PersistentDrawerLeft() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const [component, setComponent] = React.useState('application');
+  
+
+  // React.useEffect(() => {
+  //   setOpen(true);
+  // }, [])
+  
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const hiClick = () => {
+
+  }
+ 
+
   return (
-<>
-<Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Admin Dashboard
-        </Typography>
-        <Button color="inherit" onClick={handleLogOut}>Logout</Button>
-      </Toolbar>
-    </AppBar>
-  </Box>
-
-
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-          <TableCell>No.</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {user.map((doc, index) => (
-            <TableRow
-              key={doc.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-                <TableCell >{index + 1}</TableCell>
-              <TableCell component="th" scope="row">
-                {doc.email}
-              </TableCell>
-              <TableCell >{doc.fname}</TableCell>
-              <TableCell align="right"><Button onClick={(e)=>deleteHandler(doc.id )}><DeleteIcon/></Button></TableCell>
-            </TableRow>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            DASHBOARD
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {['Applicant List', 'Pending List'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <Link to='/dashboard/applicationlist'>< PersonIcon /></Link> : <Link to='/dashboard/pendinglist'><AnalyticsIcon/></Link>}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </>
+        </List>
+        <Divider />
+        <List>
+          {['Approved List', 'Declined List'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <Link to='/dashboard/approved'> <BookIcon /> </Link>: <Link to='/dashboard/declined'> <EventIcon /></Link>}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['Booking Slot', 'Payment',].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <Link to='/dashboard/bookingslot'><PermMediaIcon /></Link> : <AddCardIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['Logout',].map((text) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                <Link to='/signin'><PowerSettingsNewIcon  /></Link>  
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+        {/* <ApplicationList/> */}
+        
+      </Main>
+          
+    </Box>
   );
 }

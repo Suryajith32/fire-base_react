@@ -7,13 +7,13 @@ import {getFirestore} from 'firebase/firestore'
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDRnZnE2NqX3yKCgU2bLEwkfbvYu1HsStU",
-  authDomain: "react-authentication-606ed.firebaseapp.com",
-  projectId: "react-authentication-606ed",
-  storageBucket: "react-authentication-606ed.appspot.com",
-  messagingSenderId: "474102311440",
-  appId: "1:474102311440:web:ad754373647aa78d393895",
-  measurementId: "G-PEHT9GHFJZ"
+  apiKey: "AIzaSyBlJ1ck9QMLhraNIs1PqXaKCMBA0ejA6l8",
+  authDomain: "incubation-management-system.firebaseapp.com",
+  projectId: "incubation-management-system",
+  storageBucket: "incubation-management-system.appspot.com",
+  messagingSenderId: "414512701805",
+  appId: "1:414512701805:web:107dcc65b8814e82303a64",
+  measurementId: "G-GC029GJBVJ"
 };
 
 // Initialize Firebase

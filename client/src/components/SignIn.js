@@ -59,7 +59,7 @@ export default function SignIn() {
       try {
         console.log("hi")
         if(email ===userName||password===pass){
-          navigate('/dashboard')
+          navigate('/dashboard/applicationlist')
         }else{
           await signIn(email, password)
           navigate('/')

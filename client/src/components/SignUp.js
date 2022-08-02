@@ -36,7 +36,7 @@ export default function SignUp() {
   const[error, setError] = React.useState("");
   const {signUp}= useUserAuth();
   const navigate = useNavigate();
-  const inputRef = React.useRef("")
+  
   
 
   const handleSubmit = async(e) => {
@@ -45,6 +45,8 @@ export default function SignUp() {
     try {
       await signUp(email, password)
       const newUser = {
+
+      
         fname,
         email,
       }
